@@ -205,9 +205,9 @@ class NotionHelper:
         return self.client.pages.create(parent=parent, properties=properties, icon=icon)
 
     @retry(stop_max_attempt_number=3, wait_fixed=5000)
-    def query(self, **kwargs):
-        kwargs = {k: v for k, v in kwargs.items() if v}
-        return self.client.databases.query(**kwargs)
+    def query(self, database_id, **kwargs):
+        kwargs = {k: v for k, v in kwargs.items() if v is not None}
+        return self.client.databases.query(database_id=database_id, **kwargs)
 
     @retry(stop_max_attempt_number=3, wait_fixed=5000)
     def get_block_children(self, id):
